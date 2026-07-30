@@ -23,7 +23,18 @@ export const createUserSchema = z.object({
   ]),
 });
 
-export const updateUserSchema = createUserSchema.partial();
+export const updateUserSchema = z.object({
+  fullName: z.string().min(3).max(100).optional(),
+  email: z.email().transform((email) => email.toLowerCase()).optional(),
+  role: z.enum([
+    "ADMIN",
+    "MANAGER",
+    "TEAM_LEADER",
+    "SALES_EXECUTIVE",
+    "TELECALLER",
+  ]).optional(),
+  isActive: z.boolean().optional(),
+});
 
 export type CreateUserInput = z.infer<typeof createUserSchema>;
 export type UpdateUserInput = z.infer<typeof updateUserSchema>;

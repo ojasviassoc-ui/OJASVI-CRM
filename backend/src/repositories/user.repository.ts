@@ -24,4 +24,45 @@ export class UserRepository {
       where: { id },
     });
   }
+
+  async findAll() {
+    return prisma.user.findMany({
+      orderBy: {
+        createdAt: "desc",
+      },
+      select: {
+        id: true,
+        fullName: true,
+        email: true,
+        role: true,
+        isActive: true,
+        createdAt: true,
+        updatedAt: true,
+      },
+    });
+  }
+
+  async update(
+    id: string,
+    data: {
+      fullName?: string;
+      email?: string;
+      role?: UserRole;
+      isActive?: boolean;
+    }
+  ) {
+    return prisma.user.update({
+      where: { id },
+      data,
+    });
+  }
+
+  async deactivate(id: string) {
+    return prisma.user.update({
+      where: { id },
+      data: {
+        isActive: false,
+      },
+    });
+  }
 }
