@@ -1,3 +1,4 @@
+import { UserRole } from "@prisma/client";
 import { prisma } from "../config/prisma.js";
 
 export class UserRepository {
@@ -11,7 +12,7 @@ export class UserRepository {
     fullName: string;
     email: string;
     password: string;
-    role: "ADMIN" | "MANAGER" | "TEAM_LEADER" | "SALES_EXECUTIVE" | "TELECALLER";
+    role: UserRole;
   }) {
     return prisma.user.create({
       data,
